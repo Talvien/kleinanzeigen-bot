@@ -450,6 +450,13 @@ class KleinanzeigenBot(SeleniumMixin):
         # set contact street
         #############################
         if ad_cfg["contact"]["street"]:
+            try:
+                if not self.webdriver.find_element(By.ID, "pstad-street").is_enabled():
+                    self.webdriver.find_element(By.ID, "addressVisibility").click()
+                    pause(2000)
+            except NoSuchElementException:
+                # ignore
+                pass
             self.web_input(By.ID, "pstad-street", ad_cfg["contact"]["street"])
 
         #############################
@@ -462,6 +469,13 @@ class KleinanzeigenBot(SeleniumMixin):
         # set contact phone
         #############################
         if ad_cfg["contact"]["phone"]:
+            try:
+                if not self.webdriver.find_element(By.ID, "postad-phonenumber").is_enabled():
+                    self.webdriver.find_element(By.ID, "phoneNumberVisibility").click()
+                    pause(2000)
+            except NoSuchElementException:
+                # ignore
+                pass
             self.web_input(By.ID, "postad-phonenumber", ad_cfg["contact"]["phone"])
 
         #############################
